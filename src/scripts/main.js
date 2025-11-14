@@ -3,10 +3,22 @@
 const bodyField = document.querySelector('body');
 
 const firstPromise = new Promise((resolve, reject) => {
-  bodyField.addEventListener('click', () => {
+  function funClick() {
     resolve('First promise was resolved');
-  });
-  setTimeout(reject, 3000, 'First promise was rejected');
+
+    bodyField.removeEventListener('click', funClick);
+  }
+
+  bodyField.addEventListener('click', funClick);
+
+  const timerId = setTimeout(reject, 3000, 'First promise was rejected');
+
+  clearTimeout(timerId);
+
+  // bodyField.addEventListener('click', () => {
+  //   resolve('First promise was resolved');
+  // });
+  // setTimeout(reject, 3000, 'First promise was rejected');
 });
 
 firstPromise
@@ -32,9 +44,17 @@ firstPromise
   });
 
 const secondPromise = new Promise((resolve, reject) => {
-  bodyField.addEventListener('mousedown', () => {
+  function funDow() {
     resolve('Second promise was resolved');
-  });
+
+    bodyField.removeEventListener('mousedown', funDow);
+  }
+
+  bodyField.addEventListener('mousedown', funDow);
+
+  // bodyField.addEventListener('mousedown', () => {
+  //   resolve('Second promise was resolved');
+  // });
 });
 
 secondPromise.then((message) => {
@@ -57,6 +77,9 @@ const thirdPromise = new Promise((resolve, reject) => {
 
     if (leftClick && rightClick) {
       resolve('Third promise was resolved');
+
+      leftClick = false;
+      rightClick = false;
     }
   });
 
@@ -66,6 +89,9 @@ const thirdPromise = new Promise((resolve, reject) => {
 
     if (leftClick && rightClick) {
       resolve('Third promise was resolved');
+
+      leftClick = false;
+      rightClick = false;
     }
   });
 });
