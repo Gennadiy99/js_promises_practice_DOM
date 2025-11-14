@@ -3,22 +3,16 @@
 const bodyField = document.querySelector('body');
 
 const firstPromise = new Promise((resolve, reject) => {
+  const timerId = setTimeout(reject, 3000, 'First promise was rejected');
+
   function funClick() {
     resolve('First promise was resolved');
 
     bodyField.removeEventListener('click', funClick);
+    clearTimeout(timerId);
   }
 
   bodyField.addEventListener('click', funClick);
-
-  const timerId = setTimeout(reject, 3000, 'First promise was rejected');
-
-  clearTimeout(timerId);
-
-  // bodyField.addEventListener('click', () => {
-  //   resolve('First promise was resolved');
-  // });
-  // setTimeout(reject, 3000, 'First promise was rejected');
 });
 
 firstPromise
@@ -51,10 +45,6 @@ const secondPromise = new Promise((resolve, reject) => {
   }
 
   bodyField.addEventListener('mousedown', funDow);
-
-  // bodyField.addEventListener('mousedown', () => {
-  //   resolve('Second promise was resolved');
-  // });
 });
 
 secondPromise.then((message) => {
